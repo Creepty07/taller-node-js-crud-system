@@ -1,11 +1,15 @@
 const express = require('express');
 const morgan = require('morgan');
 require('dotenv').config();
+const empleados = require('./routes/empleados.js');
+const path = require('path');
 
 const PORT = process.env.PORT;
-
 const app = express();
-app.use(morgan);
+
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+app.use(express.json());
 
 app.get('/', (req, res, next) => {
     return res.status(200).json({
@@ -15,12 +19,11 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/login', (req, res, next) => {
-    return res.status(200).json({
-        message: "Iniciar sesión en el gestor de empleados",
-        code: 200
+    return res.sendFile(path.join(__dirname, 'public', 'login.html'))
     });
-});
+
+app.use('/empleados', empleados);
 
 app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
+    console.log(`Server running in http://localhost:${PORT}`);
 });

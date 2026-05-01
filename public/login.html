@@ -1,0 +1,132 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.wrap{display:flex;align-items:center;justify-content:center;min-height:420px;padding:2rem 0}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:2rem 2.25rem;width:100%;max-width:380px}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:1.75rem}
+.logo-icon{width:36px;height:36px;border-radius:var(--border-radius-md);background:#CECBF6;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:18px;height:18px}
+.logo-text{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.logo-sub{font-size:12px;color:var(--color-text-secondary)}
+h2{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:0.35rem}
+.subtitle{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.5rem}
+.field{margin-bottom:1rem}
+label{display:block;font-size:13px;color:var(--color-text-secondary);margin-bottom:6px}
+input{width:100%;height:36px;padding:0 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);font-size:14px;font-family:var(--font-sans);outline:none}
+input:focus{box-shadow:0 0 0 2px #CECBF6;border-color:#7F77DD}
+.pass-wrap{position:relative}
+.pass-wrap input{padding-right:38px}
+.toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--color-text-secondary);padding:0;display:flex;align-items:center}
+.toggle:hover{color:var(--color-text-primary)}
+.btn{width:100%;height:38px;background:#534AB7;color:#EEEDFE;border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;margin-top:0.5rem;font-family:var(--font-sans);transition:background 0.15s}
+.btn:hover{background:#3C3489}
+.btn:active{transform:scale(0.98)}
+.error{display:none;font-size:12px;color:var(--color-text-danger);margin-top:0.5rem}
+.divider{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1.5rem 0}
+.footer{font-size:12px;color:var(--color-text-secondary);text-align:center}
+</style>
+<div class="wrap">
+  <div class="card">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-text">Taller de Node.js S.A. de C.V.</div>
+        <div class="logo-sub">Gestión de recursos humanos</div>
+      </div>
+    </div>
+
+    <h2>Iniciar sesión</h2>
+    <p class="subtitle">Acceso exclusivo para administradores</p>
+
+    <div class="field">
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" placeholder="admin@empresa.com" autocomplete="username" />
+    </div>
+
+    <div class="field">
+      <label for="password">Contraseña</label>
+      <div class="pass-wrap">
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" />
+        <button class="toggle" id="toggleBtn" type="button" aria-label="Mostrar contraseña">
+          <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <p class="error" id="errorMsg">Correo o contraseña incorrectos.</p>
+
+    <button class="btn" id="loginBtn">Ingresar</button>
+
+    <hr class="divider" />
+    <p class="footer">Solo usuarios registrados en el sistema tienen acceso.</p>
+  </div>
+</div>
+
+<script>
+const toggleBtn = document.getElementById('toggleBtn');
+const passInput = document.getElementById('password');
+const eyeIcon = document.getElementById('eyeIcon');
+const loginBtn = document.getElementById('loginBtn');
+const errorMsg = document.getElementById('errorMsg');
+
+const eyeOpen = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+const eyeClosed = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>`;
+
+toggleBtn.addEventListener('click', () => {
+  const show = passInput.type === 'password';
+  passInput.type = show ? 'text' : 'password';
+  eyeIcon.innerHTML = show ? eyeClosed : eyeOpen;
+});
+
+loginBtn.addEventListener('click', () => {
+  const correo = document.getElementById('correo').value.trim();
+  const pass = passInput.value;
+  errorMsg.style.display = 'none';
+
+  if (!correo || !pass) {
+    errorMsg.textContent = 'Por favor completa todos los campos.';
+    errorMsg.style.display = 'block';
+    return;
+  }
+
+  loginBtn.textContent = 'Verificando...';
+  loginBtn.disabled = true;
+
+  setTimeout(() => {
+    fetch('/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({correo, password: pass})
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        window.location.href = '/empleados';
+      } else {
+        errorMsg.textContent = data.message || 'Correo o contraseña incorrectos.';
+        errorMsg.style.display = 'block';
+      }
+    })
+    .catch(() => {
+      errorMsg.textContent = 'Error de conexión. Intenta de nuevo.';
+      errorMsg.style.display = 'block';
+    })
+    .finally(() => {
+      loginBtn.textContent = 'Ingresar';
+      loginBtn.disabled = false;
+    });
+  }, 300);
+});
+
+document.getElementById('password').addEventListener('keydown', e => {
+  if (e.key === 'Enter') loginBtn.click();
+});
+</script>

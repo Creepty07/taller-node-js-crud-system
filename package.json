@@ -1,0 +1,39 @@
+{
+  "name": "taller-nodejs",
+  "version": "1.0.0",
+  "description": "API en Express.js para la gestión de empleados con autenticación JWT y control de acceso para administradores.",
+  "keywords": [
+    "nodejs",
+    "express",
+    "api",
+    "rest",
+    "crud",
+    "jwt",
+    "auth",
+    "employees",
+    "employee-management",
+    "hr-system",
+    "backend",
+    "security",
+    "database"
+  ],
+  "homepage": "https://github.com/Creepty07/taller-node-js-crud-system#readme",
+  "bugs": {
+    "url": "https://github.com/Creepty07/taller-node-js-crud-system/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Creepty07/taller-node-js-crud-system.git"
+  },
+  "license": "ISC",
+  "author": "Diego Alejandro Lugo Coronel, Noe Alvarez",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "morgan": "^1.10.1"
+  }
+}
